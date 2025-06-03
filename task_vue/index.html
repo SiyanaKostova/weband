@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <title>Динамични полета</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Динамични полета</h1>
+    <form @submit.prevent="handleSubmit">
+      <label>
+        Име:
+        <input v-model="form.name" required pattern="^[А-Яа-яA-Za-z\\s]+$" title="Използвайте само букви и интервали">
+      </label>
+
+      <label>
+        Тип:
+        <select v-model="form.type" required>
+          <option disabled value="">-- Изберете --</option>
+          <option value="invoice">Фактура</option>
+          <option value="message">Съобщение</option>
+          <option value="request">Заявка</option>
+        </select>
+      </label>
+
+      <div v-if="form.type === 'invoice'">
+        <label>Цена:
+          <input v-model="form.price" type="number" min="0.01" step="0.01">
+        </label>
+        <label>Фирма:
+          <input v-model="form.company_name" minlength="2">
+        </label>
+        <label>ДДС:
+          <input v-model="form.vat" type="number" min="0" max="100" step="0.01">
+        </label>
+      </div>
+
+      <div v-if="form.type === 'message'">
+        <label>За:
+          <input v-model="form.for_whom" required>
+        </label>
+        <label>Съобщение:
+          <textarea v-model="form.message" maxlength="500" required></textarea>
+        </label>
+      </div>
+
+      <div v-if="form.type === 'request'">
+        <label>Град:
+          <input v-model="form.city" required>
+        </label>
+        <label>Улица:
+          <input v-model="form.street" required>
+        </label>
+        <label>Номер:
+          <input v-model="form.number" required>
+        </label>
+
+        <label>Тип услуга:
+          <select v-model="form.service_type" required>
+            <option disabled value="">-- Изберете --</option>
+            <option value="electricity">Ток</option>
+            <option value="water">Вода</option>
+            <option value="internet">Интернет</option>
+          </select>
+        </label>
+
+        <div v-if="form.service_type === 'electricity'">
+          <label>ЕГН:
+            <input v-model="form.egn" maxlength="10" pattern="^\\d{10}$" required>
+          </label>
+          <label>Потребление (kWh):
+            <input v-model="form.consumption" type="number" min="0" max="3000" required>
+          </label>
+        </div>
+
+        <div v-if="form.service_type === 'water'">
+          <label>Номер на водомер:
+            <input v-model="form.meter_number" maxlength="8" pattern="^\\d{1,8}$" required>
+          </label>
+          <label>Последен отчет:
+            <input v-model="form.last_reading" maxlength="10" required>
+          </label>
+        </div>
+
+        <div v-if="form.service_type === 'internet'">
+          <label>Доставчик:
+            <input v-model="form.provider" minlength="2" required>
+          </label>
+          <label>Скорост (Mbps):
+            <input v-model="form.speed" type="number" min="10" max="1000" step="10" required>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit">Изпрати</button>
+    </form>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
