@@ -1,0 +1,28 @@
+# Node.js dependencies
+node_modules/
+
+# Vite build output
+dist/
+
+# Local environment files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# macOS Finder files
+.DS_Store
+
+# Windows thumbnail cache
+Thumbs.db
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# Optional test/coverage folders (if you add tests later)
+coverage/
